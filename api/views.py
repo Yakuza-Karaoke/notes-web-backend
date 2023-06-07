@@ -5,15 +5,19 @@ from .serializers import UserSerializer
 
 
 @api_view(["GET"])
-def getUsers(request):
+def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
 
 @api_view(["POST"])
-def addUser(request):
+def add_user(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+
+def hash_password(pwd: str) -> str:
+    ...
