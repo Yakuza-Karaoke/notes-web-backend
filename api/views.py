@@ -1,12 +1,16 @@
+from rest_framework import status, permissions
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from rest_framework import status
 from django.contrib.auth import get_user_model
 
 from db.models import Note
-from .serializers import NoteSerializer, UserSerializer
+from api.serializers import NoteSerializer, UserSerializer
+from api.permissions import IsAuthorOrReadOnly
 
+
+class ApiRoot(APIView):
+    def get(request, format=None):
+        return Response(...)
 
 
 class UserList(APIView):
@@ -27,9 +31,12 @@ class UserList(APIView):
         ...
 
 
-
-
 class NoteList(APIView):
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsAuthorOrReadOnly
+    ]
+
     def get(self, request, format=None):
         notes = Note.objects.all()
         serializer = NoteSerializer(notes, many=True)
@@ -39,11 +46,14 @@ class NoteList(APIView):
         serializer.save(owner=self.request.user)
 
 class UserNotes(APIView):
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsAuthorOrReadOnly
+    ]
+
     def get(self, request, format=None):
         user = request.user
         notes = user.note_set.all()
         serializer = NoteSerializer(notes, many=True)
         return Response(serializer.data)
     
-    def post(self, request, format=None):
-        ...
