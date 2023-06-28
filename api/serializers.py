@@ -4,14 +4,14 @@ from db.models import Note
 
 
 class UserSerializer(serializers.ModelSerializer):
-    notes = serializers.PrimaryKeyRelatedField(
-        many=True, 
-        queryset=Note.objects.all()
-    )
+    # notes = serializers.PrimaryKeyRelatedField(
+    #     many=True, 
+    #     queryset=Note.objects.all()
+    # )
     
     class Meta:
         model = User
-        fields = ["id", "username", "notes"]
+        fields = ["id", "username"]
 
 
 class NoteSerializer(serializers.ModelSerializer):

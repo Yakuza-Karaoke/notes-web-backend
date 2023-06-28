@@ -8,6 +8,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path("user", views.UserList.as_view()),
+    path("user/delete_user", views.DeleteUser.as_view()),
     path("notes/", views.NoteList.as_view()),
     path("notes/<int:user_id>/", views.UserNotes.as_view()),
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),

@@ -43,7 +43,7 @@ SIMPLE_JWT = {
     "BLACKLIST_AFTER_ROTATION": True,
     "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
-    "VERIFYING_KEY": "",
+    "VERIFYING_KEY": "not_secured_example_of_verifying_key123456789",
     "AUDIENCE": None,
     "ISSUER": None,
     "JSON_ENCODER": None,

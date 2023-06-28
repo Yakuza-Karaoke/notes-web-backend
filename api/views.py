@@ -2,6 +2,7 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
+from django.http import Http404
 
 from db.models import Note
 from api.serializers import NoteSerializer, UserSerializer
@@ -27,9 +28,15 @@ class UserList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, request, format=None):
-        ...
 
+class DeleteUser(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def delete(self, request):
+        user = self.request.user
+        user.delete()
+
+        return Response({"status": "deleted successfully"})
 
 class NoteList(APIView):
     permission_classes = [
@@ -44,6 +51,13 @@ class NoteList(APIView):
     
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def post(self, request, format=None):
+        serializer = NoteSerializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer=serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserNotes(APIView):
     permission_classes = [
