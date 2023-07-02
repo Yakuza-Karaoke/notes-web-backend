@@ -2,11 +2,11 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
-from django.http import Http404
 
 from db.models import Note
 from api.serializers import NoteSerializer, UserSerializer
 from api.permissions import IsAuthorOrReadOnly
+
 
 
 class ApiRoot(APIView):
