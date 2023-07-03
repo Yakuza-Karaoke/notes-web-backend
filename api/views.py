@@ -9,11 +9,6 @@ from api.permissions import IsAuthorOrReadOnly
 
 
 
-class ApiRoot(APIView):
-    def get(request, format=None):
-        return Response(...)
-
-
 class UserList(APIView):
     def get(self, request, format = None):
         User = get_user_model()
