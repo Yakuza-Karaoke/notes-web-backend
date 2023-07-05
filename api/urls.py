@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
+    path("user", views.UserList.as_view()),
     path("notes/", views.NoteList.as_view()),
     path("notes/<int:user_id>/", views.UserNotes.as_view()),
 ]
