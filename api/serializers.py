@@ -5,17 +5,18 @@ from db.models import Note
 
 class UserSerializer(serializers.ModelSerializer):
     # notes = serializers.PrimaryKeyRelatedField(
-    #     many=True, 
+    #     many=True,
     #     queryset=Note.objects.all()
     # )
-    
+
     class Meta:
         model = User
         fields = ["id", "username"]
 
 
 class NoteSerializer(serializers.ModelSerializer):
-    author = serializers.ReadOnlyField(source='author.username')
+    author = serializers.ReadOnlyField(source="author.username")
+
     class Meta:
         model = Note
         fields = "__all__"
